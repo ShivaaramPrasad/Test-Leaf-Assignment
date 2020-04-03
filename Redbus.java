@@ -14,14 +14,12 @@ public class Redbus {
 		 System.setProperty("webdriver.chrome.driver", "D:\\Ecllipse\\Learn_Selenium\\Selenium\\drivers\\chromedriver.exe");
 
 		ChromeDriver driver = new ChromeDriver();
-		/*to maximize the browser */
+
 		driver.manage().window().maximize();
+		
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
-		/* to load the url of the rebus application in the chrome browser */
 		driver.get("https://www.redbus.in/");
-
-		/* webelement is used since multiple actions done on same element */
 
 		driver.findElementById("src").sendKeys("Chennai");
 		Thread.sleep(5000);
