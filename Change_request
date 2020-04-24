@@ -1,0 +1,57 @@
+package weekfour;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Change_request {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		System.setProperty("webdriver.chrome.driver", "C:\\Testleaf\\Selenium\\driver\\chromedriver\\chromedrivernew.exe");  
+		ChromeDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://dev92474.service-now.com");
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+		driver.switchTo().frame("gsft_main");
+		driver.findElementById("user_name").sendKeys("admin");
+		driver.findElementById("user_password").sendKeys("India@123");
+		driver.findElementById("sysverb_login").click();
+		driver.switchTo().defaultContent();
+		Thread.sleep(3000);
+		driver.findElementById("filter").sendKeys("Change");
+		
+		Thread.sleep(3000);
+
+		driver.findElementByLinkText("Create New").click();
+		driver.switchTo().frame("gsft_main");
+		Thread.sleep(2000);
+		driver.findElementByXPath("//a[text()[normalize-space()='Normal: Changes without predefined plans that require approval and CAB authorization.']]").click();
+		String ChangeNumber = driver.findElementById("change_request.number").getAttribute("value");
+		System.out.println("New Incident Number: "+ChangeNumber);
+		
+		driver.findElementById("change_request.short_description").sendKeys("New update short description");
+		driver.findElementById("change_request.description").sendKeys("New Description");
+		
+		driver.findElementById("sysverb_insert_bottom").click();
+		
+		driver.findElementByXPath("//span[text()='Press Enter from within the input to submit the search.']/following-sibling::input").sendKeys(ChangeNumber,Keys.ENTER);
+		Thread.sleep(3000);
+		driver.findElementByXPath("//a[@class='linked formlink']").click();
+		
+		Thread.sleep(3000);
+		String changeVerify = driver.findElementById("change_request.number").getAttribute("value");
+		if(ChangeNumber.equals(changeVerify)) {
+			System.out.println("Change Number "+ChangeNumber+ " Is Verified");
+		}
+		driver.close();
+		
+		
+
+	}
+
+}
